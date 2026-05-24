@@ -1,7 +1,7 @@
 'use server';
 
 import { createClient } from "@/utils/supabase/server";
-import { redirect } from "next/navigation";
+
 import { extractTextFromPDF } from "@/lib/pdf-service";
 import { analyzeResumeWithHuggingFace } from "@/lib/hf-service";
 

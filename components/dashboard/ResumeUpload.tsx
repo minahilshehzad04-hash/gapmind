@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { Upload, FileText, Loader2, CheckCircle2, AlertCircle } from 'lucide-react';
+import { Upload, Loader2, CheckCircle2, AlertCircle } from 'lucide-react';
 import { uploadResume } from '@/app/dashboard/actions';
 
 export default function ResumeUpload() {
@@ -36,9 +36,9 @@ export default function ResumeUpload() {
                 // Reset after 3 seconds
                 setTimeout(() => setStatus('idle'), 3000);
             }
-        } catch (err: any) {
+        } catch (err: unknown) {
             setStatus('error');
-            setError(err.message || 'Something went wrong');
+            setError(err instanceof Error ? err.message : 'Something went wrong');
         } finally {
             setIsUploading(false);
             // Clear input

@@ -51,8 +51,8 @@ export async function uploadResume(formData: FormData) {
 
         revalidatePath("/dashboard");
         return { success: true };
-    } catch (error: any) {
+    } catch (error: unknown) {
         console.error("Upload error:", error);
-        return { error: error.message };
+        return { error: error instanceof Error ? error.message : "Unknown error" };
     }
 }

@@ -1,6 +1,6 @@
 import { createClient } from "@/utils/supabase/server";
 import { notFound, redirect } from "next/navigation";
-import { CheckCircle2, XCircle, ArrowRight, Lightbulb, BookOpen, GraduationCap, ClipboardList, Calendar } from "lucide-react";
+import { CheckCircle2, XCircle, ArrowRight, Lightbulb, BookOpen, GraduationCap, Calendar } from "lucide-react";
 import Link from "next/link";
 
 export default async function ResultsPage({ params }: { params: Promise<{ id: string }> }) {
@@ -33,7 +33,7 @@ export default async function ResultsPage({ params }: { params: Promise<{ id: st
         return redirect("/dashboard");
     }
 
-    const roadmapData = (analysis.learning_roadmap as any[]) || [];
+    const roadmapData = (analysis.learning_roadmap as { month?: string, step?: string, topics?: string[], resources?: string[], resource?: string }[]) || [];
 
     // Normalize roadmap steps
     const roadmap = roadmapData.map((item, index) => ({
@@ -69,8 +69,8 @@ export default async function ResultsPage({ params }: { params: Promise<{ id: st
                             {analysis.target_role}
                         </h1>
                         <p className="text-lg text-slate-400 max-w-2xl leading-relaxed">
-                            We've analyzed your profile against industry standards for <span className="text-white font-medium">{analysis.target_role}</span>.
-                            Here's your personalized growth roadmap to bridge the gap.
+                            We&apos;ve analyzed your profile against industry standards for <span className="text-white font-medium">{analysis.target_role}</span>.
+                            Here&apos;s your personalized growth roadmap to bridge the gap.
                         </p>
                     </div>
 
