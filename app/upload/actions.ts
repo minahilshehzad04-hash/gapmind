@@ -3,7 +3,7 @@
 import { createClient } from "@/utils/supabase/server";
 
 import { extractTextFromPDF } from "@/lib/pdf-service";
-import { analyzeResumeWithHuggingFace } from "@/lib/hf-service";
+import { analyzeResumeWithLangChain } from "@/lib/langchain-resume";
 
 export async function uploadResumeAction(formData: FormData) {
     const file = formData.get("resume") as File;
@@ -60,8 +60,8 @@ export async function uploadResumeAction(formData: FormData) {
         }
 
         // 4. AI Analysis
-        console.log("Starting Hugging Face AI Analysis...");
-        const analysisResult = await analyzeResumeWithHuggingFace(extractedText, targetRole);
+        console.log("Starting LangChain AI Analysis...");
+        const analysisResult = await analyzeResumeWithLangChain(extractedText, targetRole);
         console.log("AI Analysis complete.");
 
         // 5. Save Analysis record
