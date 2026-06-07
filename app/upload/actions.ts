@@ -4,6 +4,7 @@ import { createClient } from "@/utils/supabase/server";
 
 import { extractTextFromPDF } from "@/lib/pdf-service";
 import { analyzeResumeWithLangChain } from "@/lib/langchain-resume";
+import { ensureUserRecord } from "@/lib/supabase-user";
 
 export async function uploadResumeAction(formData: FormData) {
     const file = formData.get("resume") as File;
@@ -18,6 +19,8 @@ export async function uploadResumeAction(formData: FormData) {
     if (!user) return { error: "Unauthorized" };
 
     try {
+        await ensureUserRecord(supabase, user);
+
         console.log("Starting upload process for role:", targetRole);
 
         // 1. Upload to Supabase Storage

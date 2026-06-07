@@ -2,6 +2,7 @@
 
 import { createClient } from "@/utils/supabase/server";
 import { extractTextFromPDF } from "@/lib/pdf-service";
+import { ensureUserRecord } from "@/lib/supabase-user";
 import { revalidatePath } from "next/cache";
 
 export async function uploadResume(formData: FormData) {
@@ -18,6 +19,8 @@ export async function uploadResume(formData: FormData) {
     }
 
     try {
+        await ensureUserRecord(supabase, user);
+
         // 1. Upload to Storage
         const fileExt = file.name.split(".").pop();
         const fileName = `${user.id}/${Math.random()}.${fileExt}`;
